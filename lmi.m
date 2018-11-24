@@ -3,10 +3,10 @@
 global A B C D N L M G;
 A=[-1 -1 0;-1 0 0; 0 -1 -1];
 B=0;
-D=[-1; 0;1];
-C=[1 0 0;0 1 1];
+D=[-1 0 0]';%D=[-1; 0;1];
+C=[1 0 0;0 0 1];
 CD_plus = inv((C*D)'*(C*D))*(C*D)';
-U=-D*CD_plus;
+U=-D*CD_plus; 
 V=eye(2) - C*D*CD_plus;
 I=eye(3);
 IplusUC=I+U*C;
@@ -51,7 +51,7 @@ G=M*B;
 L=K*(eye(2)+C*E)-M*A*E;
 
 %% simulation
-Ts=1e-2;Ns=100;u=0; % zero input
+Ts=1e-2;Ns=60;u=0; % zero input
 % initial condition 
 x(:,1)=[0 0 0];
 y(:,1)=C*x(:,1);
@@ -65,10 +65,11 @@ for i=2:Ns
 end
 % estimation
 z(:,1)=[0.3 0.3 0.3];
-xest(:,1)=[0.3 0.3 0.7];
+xest(:,1)=0.9*z(:,1);
 for j=1:Ns
     t=j*Ts;
-    f=[0.6*xest(1,j)*sin(2*t);0.6*xest(2,j)*cos(2*t); 0];
+    f=[0.5*sin(xest(2,j)) ; 0.6*cos(xest(3,j)); 0];
+    %f=[0.6*xest(1,j)*sin(2*t);0.6*xest(2,j)*cos(2*t); 0];
     zdot=N*z(:,j) +L*y(:,j) +M*f;
     z(:,j+1)=z(:,j) + zdot*Ts;
     xest(:,j+1) = z(:,j+1) -E*y(:,j);
