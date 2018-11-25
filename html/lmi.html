@@ -1,0 +1,283 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>SIMULATION FOR PAPER PRESENTATION</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-11-25"><meta name="DC.source" content="lmi.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>SIMULATION FOR PAPER PRESENTATION</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Title of the  Paper: Full-order Observers Design for Nonlinear Systems with Unknown Input</a></li><li><a href="#2">LMI</a></li><li><a href="#3">simulation</a></li><li><a href="#4">plotting</a></li><li><a href="#5">comment</a></li></ul></div><h2>Title of the  Paper: Full-order Observers Design for Nonlinear Systems with Unknown Input<a name="1"></a></h2><pre class="codeinput">clear ;close;
+<span class="keyword">global</span> A B C D N L M G;
+A=[-1 -1 0;-1 0 0; 0 -1 -1];
+B=0;
+D=[-1; 0;1];
+C=[1 0 0;0 1 1];
+CD_plus = inv((C*D)'*(C*D))*(C*D)';
+U=-D*CD_plus;
+V=eye(2) - C*D*CD_plus;
+I=eye(3);
+IplusUC=I+U*C;
+IplusUCA=IplusUC*A;
+VCA=V*C*A;
+gamma=0.6;
+</pre><h2>LMI<a name="2"></a></h2><pre class="codeinput">setlmis([]);
+P=lmivar(1,[3,1]);
+Ybar=lmivar(2,[3,2]);
+Kbar=lmivar(2,[3,2]);
+<span class="comment">% delcaratio of X</span>
+lmiterm([1 1 1 1],IplusUCA',1,<span class="string">'s'</span>);
+<span class="comment">%lmiterm([1 1 1 1],1,IplusUCA);</span>
+<span class="comment">%lmiterm([1 1 1 -2],VCA',1);</span>
+lmiterm([1 1 1  2],1,VCA,<span class="string">'s'</span>);
+<span class="comment">%lmiterm([1 1 1 -3],-C',1);</span>
+lmiterm([1 1 1 3],-1,C,<span class="string">'s'</span>);
+lmiterm([1 1 1 0],gamma);
+<span class="comment">% declaration of X12</span>
+lmiterm([1 1 2 1],sqrt(gamma),IplusUC);
+lmiterm([1 1 2 2],sqrt(gamma),V*C);
+<span class="comment">% % declaration of X12'</span>
+<span class="comment">% lmiterm([1 2 1 -1],sqrt(gamma)*IplusUC',1);</span>
+<span class="comment">% lmiterm([1 2 1 -2],sqrt(gamma)*(V*C)',1);</span>
+<span class="comment">% decration of I</span>
+lmiterm([1 2 2 0],-1);
+
+LMISYS = getlmis;
+
+[tmin,xfeas,] = feasp(LMISYS);
+P = dec2mat(LMISYS,xfeas,P);
+Y_bar = dec2mat(LMISYS,xfeas,Ybar);
+K_bar = dec2mat(LMISYS,xfeas,Kbar);
+
+Y=inv(P)*Y_bar;
+K=inv(P)*K_bar;
+E=U +Y*V;
+M= I + E*C;
+N=M*A-K*C;
+G=M*B;
+L=K*(eye(2)+C*E)-M*A*E;
+</pre><pre class="codeoutput">
+ Solver for LMI feasibility problems L(x) &lt; R(x)
+    This solver minimizes  t  subject to  L(x) &lt; R(x) + t*I
+    The best value of t should be negative for feasibility
+
+ Iteration   :    Best value of t so far 
+ 
+* switching to QR
+     1                        0.151703
+     2                        0.151703
+     3                        0.134741
+     4                        0.134741
+     5                        0.130996
+     6                        0.130996
+***                 new lower bound:     0.096615
+
+ Result:  best value of t:     0.130996
+          f-radius saturation:  0.000% of R =  1.00e+09
+
+ These LMI constraints were found infeasible 
+
+</pre><h2>simulation<a name="3"></a></h2><pre class="codeinput">Ts=1e-2;Ns=500;u=0; <span class="comment">% zero input</span>
+<span class="comment">% initial condition</span>
+x(:,1)=[0 0 0];
+y(:,1)=C*x(:,1);
+randn(<span class="string">'seed'</span>,0);
+mean=[0 0]; Q=eye(2);  <span class="comment">%noise mean and covariance</span>
+<span class="comment">% true state and measurement generation</span>
+<span class="keyword">for</span> i=2:Ns
+    [t,xt]=ode45(@(t,x)true_state_dyn(t,x,u),[(i-1)*Ts,(i+1)*Ts],x(:,i-1));
+    x(:,i)=xt(end,:);
+    y(:,i)=C*x(:,i) + mvnrnd(mean,Q)';
+<span class="keyword">end</span>
+<span class="comment">% estimation</span>
+z(:,1)=[0.3 0.3 0.3];
+xest(:,1)=[0 0 0];
+<span class="keyword">for</span> j=1:Ns
+    t=j*Ts;
+    f=[0.6*xest(1,j)*sin(2*t);0.6*xest(2,j)*cos(2*t); 0];
+    zdot=N*z(:,j) + L*y(:,j) + M*f;
+    z(:,j+1)=z(:,j) + zdot*Ts;
+    xest(:,j+1) = z(:,j) - E*y(:,j);
+<span class="keyword">end</span>
+</pre><h2>plotting<a name="4"></a></h2><pre class="codeinput">figure(1) <span class="comment">% for state 1</span>
+plot(x(1,:),<span class="string">'LineWidth'</span>,2);hold <span class="string">on</span>
+plot(xest(1,:),<span class="string">'LineWidth'</span>,2) ; legend(<span class="string">'true'</span>,<span class="string">'estimated'</span>); title(<span class="string">'True Vs Estimated states for state 1'</span>);
+xlabel(<span class="string">'sampling instants'</span>);ylabel(<span class="string">'x1'</span>);
+hold <span class="string">off</span>
+figure(4); <span class="comment">% state 1 estimation error error plotting</span>
+plot(abs(x(1,:)-xest(1,1:end-1))./abs(x(1,:)),<span class="string">'LineWidth'</span>,2); legend(<span class="string">' Estimation error for state 1'</span>);
+</pre><img vspace="5" hspace="5" src="lmi_01.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="lmi_02.png" style="width:560px;height:420px;" alt=""> <h2>comment<a name="5"></a></h2><p>figure(2) % for state 2 plot(x(2,:));hold on plot(xest(2,:)) ; legend('true','estimated'); title('True Vs Estimated states for state 2'); xlabel('sampling instants');ylabel('x2'); hold off figure(3) % for state 3 plot(x(3,:));hold on plot(xest(3,:)) ; legend('true','estimated'); title('True Vs Estimated states for state 3'); xlabel('sampling instants');ylabel('x3'); hold off</p><p>xlabel('sampling instants'); ylabel('estimation error x_1'); figure(5); % state 2 estimation error error plotting plot(abs(x(2,:)-xest(2,1:end-1))./abs(x(2,:))); legend(' Estimation error for state 2'); xlabel('sampling instants'); ylabel('estimation error for x_2'); figure(6); % state 1 estimation error error plotting plot(abs(x(3,:)-xest(3,1:end-1))./abs(x(3,:))); legend(' Estimation error for state 3'); xlabel('sampling instants'); ylabel('estimation error for x_3');</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% SIMULATION FOR PAPER PRESENTATION
+%% Title of the  Paper: Full-order Observers Design for Nonlinear Systems with Unknown Input
+clear ;close;
+global A B C D N L M G;
+A=[-1 -1 0;-1 0 0; 0 -1 -1];
+B=0;
+D=[-1; 0;1];
+C=[1 0 0;0 1 1];
+CD_plus = inv((C*D)'*(C*D))*(C*D)';
+U=-D*CD_plus;
+V=eye(2) - C*D*CD_plus;
+I=eye(3);
+IplusUC=I+U*C;
+IplusUCA=IplusUC*A;
+VCA=V*C*A;
+gamma=0.6;
+%% LMI 
+setlmis([]);
+P=lmivar(1,[3,1]);
+Ybar=lmivar(2,[3,2]);
+Kbar=lmivar(2,[3,2]);
+% delcaratio of X
+lmiterm([1 1 1 1],IplusUCA',1,'s'); 
+%lmiterm([1 1 1 1],1,IplusUCA); 
+%lmiterm([1 1 1 -2],VCA',1); 
+lmiterm([1 1 1  2],1,VCA,'s');
+%lmiterm([1 1 1 -3],-C',1);
+lmiterm([1 1 1 3],-1,C,'s'); 
+lmiterm([1 1 1 0],gamma);
+% declaration of X12
+lmiterm([1 1 2 1],sqrt(gamma),IplusUC);      
+lmiterm([1 1 2 2],sqrt(gamma),V*C);      
+% % declaration of X12'
+% lmiterm([1 2 1 -1],sqrt(gamma)*IplusUC',1);      
+% lmiterm([1 2 1 -2],sqrt(gamma)*(V*C)',1);
+% decration of I 
+lmiterm([1 2 2 0],-1);      
+
+LMISYS = getlmis;
+
+[tmin,xfeas,] = feasp(LMISYS);
+P = dec2mat(LMISYS,xfeas,P);
+Y_bar = dec2mat(LMISYS,xfeas,Ybar);
+K_bar = dec2mat(LMISYS,xfeas,Kbar);
+
+Y=inv(P)*Y_bar;
+K=inv(P)*K_bar;
+E=U +Y*V;
+M= I + E*C;
+N=M*A-K*C;
+G=M*B;
+L=K*(eye(2)+C*E)-M*A*E;
+
+%% simulation
+Ts=1e-2;Ns=500;u=0; % zero input
+% initial condition 
+x(:,1)=[0 0 0];
+y(:,1)=C*x(:,1);
+randn('seed',0);
+mean=[0 0]; Q=eye(2);  %noise mean and covariance
+% true state and measurement generation
+for i=2:Ns
+    [t,xt]=ode45(@(t,x)true_state_dyn(t,x,u),[(i-1)*Ts,(i+1)*Ts],x(:,i-1));
+    x(:,i)=xt(end,:);
+    y(:,i)=C*x(:,i) + mvnrnd(mean,Q)';
+end
+% estimation
+z(:,1)=[0.3 0.3 0.3];
+xest(:,1)=[0 0 0];
+for j=1:Ns
+    t=j*Ts;
+    f=[0.6*xest(1,j)*sin(2*t);0.6*xest(2,j)*cos(2*t); 0];
+    zdot=N*z(:,j) + L*y(:,j) + M*f;
+    z(:,j+1)=z(:,j) + zdot*Ts;
+    xest(:,j+1) = z(:,j) - E*y(:,j);
+end
+
+%% plotting  
+figure(1) % for state 1
+plot(x(1,:),'LineWidth',2);hold on
+plot(xest(1,:),'LineWidth',2) ; legend('true','estimated'); title('True Vs Estimated states for state 1');
+xlabel('sampling instants');ylabel('x1');
+hold off
+figure(4); % state 1 estimation error error plotting 
+plot(abs(x(1,:)-xest(1,1:end-1))./abs(x(1,:)),'LineWidth',2); legend(' Estimation error for state 1');
+
+
+
+%% comment 
+% figure(2) % for state 2
+% plot(x(2,:));hold on
+% plot(xest(2,:)) ; legend('true','estimated'); title('True Vs Estimated states for state 2');
+% xlabel('sampling instants');ylabel('x2');
+% hold off
+% figure(3) % for state 3
+% plot(x(3,:));hold on
+% plot(xest(3,:)) ; legend('true','estimated'); title('True Vs Estimated states for state 3');
+% xlabel('sampling instants');ylabel('x3');
+% hold off
+% 
+% xlabel('sampling instants'); ylabel('estimation error x_1');
+% figure(5); % state 2 estimation error error plotting 
+% plot(abs(x(2,:)-xest(2,1:end-1))./abs(x(2,:))); legend(' Estimation error for state 2');
+% xlabel('sampling instants'); ylabel('estimation error for x_2');
+% figure(6); % state 1 estimation error error plotting 
+% plot(abs(x(3,:)-xest(3,1:end-1))./abs(x(3,:))); legend(' Estimation error for state 3');
+% xlabel('sampling instants'); ylabel('estimation error for x_3');
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
