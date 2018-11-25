@@ -1,3 +1,4 @@
+%Ram Milan Verma
 %% SIMULATION FOR PAPER PRESENTATION
 %% Title of the  Paper: Full-order Observers Design for Nonlinear Systems with Unknown Input
 clear ;close;
@@ -62,7 +63,7 @@ mean=[0 0]; Q=eye(2);  %noise mean and covariance
 for i=2:Ns
     [t,xt]=ode45(@(t,x)true_state_dyn(t,x,u),[(i-1)*Ts,(i+1)*Ts],x(:,i-1));
     x(:,i)=xt(end,:);
-    y(:,i)=C*x(:,i) + mvnrnd(mean,Q)';
+    y(:,i)=C*x(:,i) %+ mvnrnd(mean,Q)';
 end
 % estimation
 z(:,1)=[0.3 0.3 0.3];
